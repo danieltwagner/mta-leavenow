@@ -34,9 +34,9 @@ class MTAData:
                 # Conversion takes around 2-3 seconds on a RaspPi Zero
                 transit_feed_dict = protobuf_to_dict(transit_feed_pb)
                 train_data = transit_feed_dict['entity']
+                break
 
-            except Exception as e:
-                print e
+            except Exception:
                 if attempt <= self.MAX_ATTEMPTS:
                     display_message = (' ERROR getting data. Delaying for 30s. Attempt {} of {}.'
                         .format((attempt + 1), self.MAX_ATTEMPTS))
@@ -46,8 +46,6 @@ class MTAData:
                     display_message = (' ERROR getting data. Max # of retries attempted.')
                     time.sleep(10)
                     raise
-
-            break
 
         # Loop through the data to get train times, and line info
         arrival_list = []

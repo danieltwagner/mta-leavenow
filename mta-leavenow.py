@@ -153,9 +153,12 @@ def main(formatter):
 
     # loop indefinitely, pausing for a set time
     while True:
-        next_trains = data.fetch_station_trains()
-        if not next_trains:
-            display_message = ('     Cannot get train data or there are no trains.')
+        try:
+            next_trains = data.fetch_station_trains()
+            if not next_trains:
+                display_message = ('     Cannot get train data or there are no trains.')
+        except Exception as e:
+                display_message = ('     ' + e)
 
         display_message = formatter(next_trains)
         time.sleep(REFRESH_DELAY)
